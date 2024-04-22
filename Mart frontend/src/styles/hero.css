@@ -1,0 +1,100 @@
+
+.main-container {
+  display: flex;
+  height: 85vh;
+  min-height: 100%;
+  background: linear-gradient(
+      rgba(229, 239, 255, 0.844),
+      rgba(229, 239, 255, 0.876)
+    ),
+    url(../assets/images/hero-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.main-content {
+  padding-top: 7rem;
+  padding-left: 5rem;
+  width: 50vw;
+  text-transform: capitalize;
+}
+.main-content h2 {
+  font-size: 3.8vw;
+  width: 50vw;
+  font-weight: bolder;
+}
+
+.main-content h2 span {
+  color: rgba(37, 110, 228, 1);
+  font-style: italic;
+}
+
+.main-content p {
+  width: 45vw;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 1.2rem;
+}
+
+.main-content button {
+  width: 12vw;
+  height: 3.2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 1.2rem;
+  text-transform: capitalize;
+  padding: 0.5rem;
+  border: none;
+  background: rgba(37, 110, 228, 1);
+  color: #fefefe;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.main-container-image {
+  width: 50vw;
+}
+.main-container-image img {
+  width: 102%;
+}
+.card-section {
+    width: 100vw;
+    height: 60vh;
+    background: rgb(247, 247, 247);
+  }
+  .card {
+    width: 85vw;
+    height: 15vh;
+    background: #ffffff;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1.2rem;
+    box-shadow: 0px 2px 13px 0px rgba(177, 172, 172, 0.75);
+    overflow: hidden;
+  }
+  
+  .card1:last-child {
+    border-right: none !important;
+  }
+  
+  .card1 {
+    padding: 1.2rem;
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    text-transform: capitalize;
+    border-right: 1px solid rgb(217, 217, 217);
+  }
+  
+  .card1 div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
