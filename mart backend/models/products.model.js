@@ -34,6 +34,10 @@ const product_Schema = mongoose.Schema(
       lowercase: true,
       enum: ["shoes", "computers", "phones", "clothing", "accessories"],
     },
+    adminUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,

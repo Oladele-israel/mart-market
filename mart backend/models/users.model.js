@@ -4,18 +4,18 @@ const user = mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      require: true["enter your full name"],
     },
 
     username: {
       type: String,
-      require: true,
+      require: true["enter your user name"],
       lowercase: true,
       unique: true,
     },
     email: {
       type: String,
-      require: true,
+      require: true["please enter your email"],
       lowercase: true,
     },
     password: {

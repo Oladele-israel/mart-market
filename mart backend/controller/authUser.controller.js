@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import jwt, { decode } from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import express from "express";
-import { Admin } from "mongodb";
 const app = express();
 app.use(cookieParser());
 //getting all the users
@@ -63,6 +62,57 @@ const createUser = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "user created succesfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: " user not created",
+      error: error.message,
+    });
+  }
+};
+
+//register user as admin
+const createAdmin = async (req, res) => {
+  try {
+    const { name, username, email, password, phoneNumber, isAdmin } = req.body;
+    //vetting username because on tow person could bear one name
+    const validUserName = await users.findOne({ username: username }).exec();
+    if (validUserName) {
+      console.log(validUserName);
+      return res.status(403).json({
+        success: false,
+        message: "userName already exist choose another",
+      });
+    }
+
+    //validating email: using validator.js
+    if (!email || !validator.isEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid email address",
+      });
+    }
+
+    //using bcryptjs to hash password
+    const salt = await bcrypt.genSalt(15);
+    const saltedPass = await bcrypt.hash(password, salt);
+
+    const created_Admin = await users.create({
+      name,
+      username,
+      email,
+      password: saltedPass,
+      phoneNumber,
+      isAdmin: true,
+    });
+
+    // Destructure _doc and exclude password
+    const { password: userPassword, ...rest } = created_Admin._doc;
+
+    res.status(201).json({
+      success: true,
+      message: "Admin created succesfully",
     });
   } catch (error) {
     res.status(500).json({
@@ -172,5 +222,5 @@ const validateToken = (req, res) => {
   });
 };
 
-export { createUser, loginUser, getUsers, validateToken };
+export { createUser, loginUser, getUsers, validateToken, createAdmin };
 //persistence user login
