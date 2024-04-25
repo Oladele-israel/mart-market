@@ -3,25 +3,46 @@ import { IoPersonOutline } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import EazymartLogo from "./home-page component/EazymartLogo";
-import { Link } from "react-router-dom";
 import { useAuthContext } from "./context/auth-context";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Header = () => {
   const { userDetails, error, message } = useAuthContext();
   const [isToggle, setIsToggle] = useState(false);
   const [link, setLink] = useState("");
   const navigate = useNavigate();
-
+  axios.defaults.withCredentials = true; //i.e with cookie sent along
   const handleSelectChange = (e) => {
     const selectedLink = e.target.value;
     setLink(selectedLink);
     if (selectedLink === "login") {
       navigate("/login");
-    }  };
+    }
+    if (selectedLink === "dashBoard") {
+      navigate("/admin");
+    }
+    if (selectedLink === "logout") {
+      axios
+        .post("http://localhost:5000/user/logout")
+        .then((res) => {
+          console.log("this is the response", res);
+          if (res.data.success) {
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          console.error("An error occurred:", error);
+          // Check if the error is an Axios error and log the response data
+          if (axios.isAxiosError(error)) {
+            console.log("Error response data:", error.response.data);
+          }
+        });
+    }
+  };
 
   //getting the values of the the user and their navigation to the  respevtive pages
   const handleToggle = () => {
@@ -49,9 +70,7 @@ const Header = () => {
               {message === "Authorized" && userDetails.isAdmin === false ? (
                 <select onChange={handleSelectChange}>
                   <option value="">Account</option>
-                  <option value="">
-                    <button>Sigin</button>
-                  </option>
+                  <option value="logout">logout</option>
                 </select>
               ) : message === "Authorized" && userDetails.isAdmin === true ? (
                 <select
@@ -59,10 +78,8 @@ const Header = () => {
                   onChange={handleSelectChange}
                 >
                   <option value="">Hi {userDetails.name}</option>
-                  <option value="">
-                    <Link to="/Admin">Check products</Link>
-                  </option>
-                  <option value="">LogOut</option>
+                  <option value="dashBoard">Dashboard</option>
+                  <option value="logout">LogOut</option>
                 </select>
               ) : (
                 <select
@@ -86,7 +103,10 @@ const Header = () => {
               <p className="font-semibold text-[#575454] text-[1.2rem] hidden md:block">
                 cart-List
               </p>
-              <IoCartOutline className="text-xl md:text-4xl" />
+              <div className="flex">
+                <IoCartOutline className="text-xl md:text-4xl" />
+                <p className="text-xl font-bold text-orange-400 bg-black rounded-full h-7 w-7 text-center">1</p>
+              </div>
             </div>
           </div>
 
@@ -117,7 +137,7 @@ const Header = () => {
           <li className="hover:bg-slate-400 md:hover:bg-white w-full text-center p-2">
             all categories
           </li>
-          
+
           <li className="hover:bg-slate-400 hover:cursor-pointer  md:hover:bg-white w-full text-center p-2">
             phones
           </li>

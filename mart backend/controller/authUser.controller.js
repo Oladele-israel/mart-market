@@ -152,6 +152,9 @@ const loginUser = async (req, res) => {
     });
     return;
   }
+  if (validEmail.isAdmin) {
+    console.log("this user is an admin");
+  }
 
   //we will generate our access token and refresh token using jwt
   const accessToken = jwt.sign(
@@ -180,7 +183,7 @@ const loginUser = async (req, res) => {
   const userData = {
     name: validEmail.name,
     username: validEmail.username,
-    admin: validEmail.Admin,
+    admin: validEmail.isAdmin,
     phoneNumber: validEmail.phoneNumber,
   };
   //push to cookie for storage
@@ -205,6 +208,22 @@ const loginUser = async (req, res) => {
   });
 };
 
+const logOut = async (req, res) => {
+  try {
+    res.clearCookie("hellobro");
+    res.clearCookie("hellosis");
+    console.log("User logged out");
+
+    res.status(200).json({ message: "Logout successful", success: true });
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "user not logged out",
+      error: error.message,
+    });
+  }
+};
+
 const validateToken = (req, res) => {
   const authUser = req.user;
   const userData = {
@@ -222,5 +241,5 @@ const validateToken = (req, res) => {
   });
 };
 
-export { createUser, loginUser, getUsers, validateToken, createAdmin };
+export { createUser, loginUser, getUsers, validateToken, createAdmin, logOut };
 //persistence user login
