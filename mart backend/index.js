@@ -11,14 +11,12 @@ import cors from "cors";
 // middleware to accept jsson
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: ["https://mart-market.vercel.app/", "http://localhost:5173"],
-    methods: "GET, POST",
-    credentials: true,
-  })
-);
-
+const corsOption = {
+  origin: ["https://mart-market.vercel.app", "http://localhost:5173/"],
+  methods: "GET, POST",
+  credentials: true,
+};
+app.use(cors(corsOption));
 //configuring the environmental variables path
 dotenv.config();
 //defining route,
