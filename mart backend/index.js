@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://mart-market.vercel.app/", "*", "http://localhost:5173"],
+    origin: ["https://mart-market.vercel.app/", "http://localhost:5173"],
     methods: "GET, POST",
     credentials: true,
   })
