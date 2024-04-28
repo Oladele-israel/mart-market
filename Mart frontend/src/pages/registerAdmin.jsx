@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import EazymartLogo from "../components/home-page component/EazymartLogo";
 import appleLogo from "../assets/images/loginComponet-images/apple-fill.png";
 import google from "../assets/images/loginComponet-images/flat-color-icons_google.png";
@@ -9,71 +8,122 @@ import facebookLogo from "../assets/images/loginComponet-images/logos_facebook.p
 import vectorBg from "../assets/images/loginComponet-images/Vector 2.png";
 import finegirl from "../assets/images/loginComponet-images/pngegg (98) 1@2x.png";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { useAuthContext } from "../components/context/auth-context";
+import { IoMdContact } from "react-icons/io";
+import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const RegisterAdmin = () => {
   const navigate = useNavigate();
-  const { userDetails, error, loginUser, logoutUser, message } =
-    useAuthContext();
+  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [phone, setPhone] = useState();
 
-  //axios with credentials4
+  //axios with credentials
   axios.defaults.withCredentials = true;
-  // handle submit
-  const handleSubmit = async (e) => {
+
+  //handle submit
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    await loginUser({ email, password });
-    navigate("/");
+    axios
+      .post("http://localhost:5000/user/signupAdmin", {
+        name: name,
+        username: userName,
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        console.log("the signup sussess response => ", res);
+        navigate("/login");
+      })
+      .catch((error) => {
+        if (error instanceof axios.AxiosError) {
+          console.log("the error => ", error?.response?.data);
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
-
   return (
-    <div className="bg-slate-50 w-[80vw] h-[90vh] m-auto mt-10 rounded-xl flex">
-      <div className="w-[50%] h-[100%] overflow-y-hidden relative hidden sm:hidden md:block">
+    <div className="bg-slate-50 w-[90vw] h-[95vh] m-auto mt-1 rounded-xl flex">
+      <div className=" w-[100%] md:w-[50%] h-[100%] overflow-y-hidden relative hidden sm:hidden md:block">
         <img src={vectorBg} alt="" className="" />
         <img src={finegirl} alt="" className="absolute top-52 " />
-        {/* <img src={finegirl} alt="" /> */}
       </div>
       {/*second div for the form */}
-      <div className=" flex flex-col items-center gap-2  w-[100%]  md:w-[50%]">
+      <div className=" w-[100%]  md:w-[50%] flex flex-col items-center gap-2 ">
         <div className="mt-5 p-2 w-48  ml-[300px]">
           <EazymartLogo />
         </div>
         {/*form login section */}
         <form
           action=""
-          className="mt-7 flex flex-col w-[80%]"
+          className="mt-2 flex flex-col w-[80%]"
           onSubmit={handleSubmit}
         >
-          <div className="text-2xl font-bold">Login</div>
+          <div className=" flex flex-col  ">
+            <span className="text-2xl font-bold">Sign Up Vendor</span>
+            <span className="text-lg font-semi-bold mt-2 w-96">
+              Being a vendor on Eazymart gives you more access and more
+              audience.....
+            </span>
+          </div>
           {/*this is the input field */}
-          <div className="flex flex-col  gap-5 mt-7 w-[100%]">
-            <div>
+          <div className="flex flex-col  gap-2 mt-7 w-[100%]">
+            <div className="flex w-full items-center bg-white rounded-md p-2 border">
+              <input
+                type="text"
+                placeholder="Full Names Here"
+                required
+                className="w-[100%] p-2 outline-none "
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <IoMdContact className="text-2xl text-gray-700" />
+            </div>
+
+            <div className="flex justify-between">
               <input
                 type="email"
-                placeholder="Email Here"
+                placeholder="Enter Email Here"
                 required
-                className="w-[100%] p-4 border placeholder:text-lg rounded-md outline-none"
+                className="w-[40%] outline-none border p-4  rounded-lg"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+
+              <input
+                type="number"
+                placeholder="+234"
+                required
+                className="w-[40%] p-4 outline-none border rounded-lg "
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
+            <div className="flex w-full items-center bg-white rounded-md p-2 border">
+              <input
+                type="text"
+                placeholder="Enter User Name"
+                required
+                className="w-[100%] p-2 outline-none "
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+
             <div className="flex flex-col items-center">
               <div className="flex w-full items-center bg-white rounded-md p-2 border">
                 <input
                   type="password"
                   placeholder="Password Here"
                   required
-                  className="w-[100%] p-2 outline-none"
+                  className="w-[100%] p-2 outline-none "
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <RiLockPasswordFill className="text-2xl text-gray-700" />
-              </div>
-              <div htmlFor="" className="text-lg self-start mt-2">
-                Forgot Passwords?
               </div>
             </div>
             <button
@@ -84,18 +134,18 @@ const LoginForm = () => {
               }
               type="submit"
             >
-              {isLoading ? "loading...." : "Login"}
+              {isLoading ? "loading...." : "Create Account"}
             </button>
           </div>
           {/*this is the query section */}
-          <div className="flex flex-col mt-4 p-4 items-center gap-6">
+          <div className="flex flex-col -mt-1 p-4 items-center gap-3">
             <div className="text-lg font-semibold">
-              Dont have an account?
+              Already have an account?
               <span className="text-[#FF8831]">
-                <Link to="/register">Sign Up</Link>
+                <Link to="/login">Login</Link>
               </span>
             </div>
-            <div>Or login With</div>
+            <div>Or Sign up With</div>
             <div className="flex gap-2">
               <div className="flex items-center w-[130px] gap-1 border p-3 rounded-xl">
                 <img src={facebookLogo} alt="" />
@@ -117,7 +167,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
-//          <p className="text-orange-500 animate-pulse font-medium text-center my-20">
-// Loading...
-// </p>
+export default RegisterAdmin;

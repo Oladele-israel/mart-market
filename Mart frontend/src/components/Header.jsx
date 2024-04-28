@@ -8,14 +8,24 @@ import { AiOutlineClose } from "react-icons/ai";
 import EazymartLogo from "./home-page component/EazymartLogo";
 import { useAuthContext } from "./context/auth-context";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const { userDetails, error, message } = useAuthContext();
+  const { userDetails, error, loginUser, logoutUser, message } =
+    useAuthContext();
   const [isToggle, setIsToggle] = useState(false);
+
   const [link, setLink] = useState("");
   const navigate = useNavigate();
   axios.defaults.withCredentials = true; //i.e with cookie sent along
+
+  //the logout function
+  const handleLogout = async () => {
+    await logoutUser();
+  };
+
   const handleSelectChange = (e) => {
     const selectedLink = e.target.value;
     setLink(selectedLink);
@@ -26,21 +36,7 @@ const Header = () => {
       navigate("/admin");
     }
     if (selectedLink === "logout") {
-      axios
-        .post("http://localhost:5000/user/logout")
-        .then((res) => {
-          console.log("this is the response", res);
-          if (res.data.success) {
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          console.error("An error occurred:", error);
-          // Check if the error is an Axios error and log the response data
-          if (axios.isAxiosError(error)) {
-            console.log("Error response data:", error.response.data);
-          }
-        });
+      handleLogout();
     }
   };
 
@@ -67,12 +63,7 @@ const Header = () => {
           <div className="flex gap-x-2  justify-evenly w-[40%]">
             <div className="flex items-center gap-3 bg-slate-100 rounded-lg w-40 p-2">
               <IoPersonOutline className="text-2xl md:text-4xl" />
-              {message === "Authorized" && userDetails.isAdmin === false ? (
-                <select onChange={handleSelectChange}>
-                  <option value="">Account</option>
-                  <option value="logout">logout</option>
-                </select>
-              ) : message === "Authorized" && userDetails.isAdmin === true ? (
+              {message === "Authorized" && userDetails.isAdmin ? (
                 <select
                   className="text-xl p-3 bg-transparent outline-none"
                   onChange={handleSelectChange}
@@ -80,6 +71,11 @@ const Header = () => {
                   <option value="">Hi {userDetails.name}</option>
                   <option value="dashBoard">Dashboard</option>
                   <option value="logout">LogOut</option>
+                </select>
+              ) : message === "Authorized" && userDetails.isAdmin != true ? (
+                <select onChange={handleSelectChange}>
+                  <option value="">Account</option>
+                  <option value="logout">logout</option>
                 </select>
               ) : (
                 <select
@@ -105,7 +101,9 @@ const Header = () => {
               </p>
               <div className="flex">
                 <IoCartOutline className="text-xl md:text-4xl" />
-                <p className="text-xl font-bold text-orange-400 bg-black rounded-full h-7 w-7 text-center">1</p>
+                <p className="text-xl font-bold text-orange-400 bg-black rounded-full h-7 w-7 text-center">
+                  1
+                </p>
               </div>
             </div>
           </div>
@@ -130,9 +128,9 @@ const Header = () => {
       </header>
       <nav className=" p-4 shadow-md">
         <ul
-          className={`flex flex-col h-screen w-screen md:h-14 backdrop-sepia bg-white gap-5 ${
+          className={`flex flex-col h-screen w-screen md:h-14 text-center backdrop-sepia bg-white gap-5 ${
             isToggle ? "flex " : "hidden"
-          } md:flex md:flex-row md:justify-evenly items-center capitalize font-semibold text-black text-[1.1rem]`}
+          } md:flex md:flex-row md:justify-evenly  items-center capitalize font-semibold text-black text-[1.1rem]`}
         >
           <li className="hover:bg-slate-400 md:hover:bg-white w-full text-center p-2">
             all categories
@@ -153,6 +151,10 @@ const Header = () => {
           <li className="hover:bg-slate-400 hover:cursor-pointer md:hover:bg-white  w-full text-center p-2">
             shoes
           </li>
+          <li className="hover:bg-slate-400 hover:cursor-pointer md:hover:bg-white  w-full text-center p-2">
+            <Link to="/adminRegister">sell with us</Link>
+          </li>
+          <li className="hover:bg-slate-400 hover:cursor-pointer md:hover:bg-white  w-full text-center p-2"></li>
         </ul>
       </nav>
     </div>

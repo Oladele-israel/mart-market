@@ -7,6 +7,7 @@ import HomePage from "./pages/home-page.jsx";
 import MultiProductPage from "./pages/multiProductpage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterUser from "./pages/registerUser.jsx";
+import RegisterAdmin from "./pages/registerAdmin.jsx";
 import SingleProductPage from "./pages/product-page.jsx";
 import AdminPage from "./pages/adminPage.jsx";
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         path: "/product/:productId",
         element: <SingleProductPage />,
       },
+      {
+        path: "/Admin",
+        element: <AdminPage />,
+      },
     ],
   },
   // the login and the signup routes are outside the layout
@@ -44,8 +49,8 @@ const router = createBrowserRouter([
     element: <RegisterUser />,
   },
   {
-    path: "/Admin",
-    element: <AdminPage />,
+    path: "/adminRegister",
+    element: <RegisterAdmin />,
   },
 ]);
 

@@ -8,7 +8,7 @@ const ProductDisplaySection = ({ selectValue, selectedOption }) => {
   const handleSort = () => {};
 
   return (
-    <div className="flex flex-col gap-6 h-auto mt-40">
+    <div className="flex flex-col gap-6 h-auto mt-4">
       <div className="flex justify-between items-center p-3 ">
         <p className="text-4xl font-bold text-center">
           {selectValue === null ? "All Product" : selectValue}

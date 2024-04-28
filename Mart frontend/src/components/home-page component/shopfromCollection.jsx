@@ -6,7 +6,7 @@ import computers from "../../assets/images/computers.png";
 
 const ShopCollection = () => {
   return (
-    <div className=" flex flex-col mt-5 h-auto mb-12">
+    <div className=" flex flex-col mt-5 h-auto mb-12 md:mt-14">
       <div className="flex justify-between w-[90%] p-8 self-center items-center">
         <div className="text-2xl md:text-4xl font-bold text-black">
           Shop from our Collection

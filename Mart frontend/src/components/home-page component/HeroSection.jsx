@@ -6,7 +6,7 @@ const HeroSection = () => {
     //   className="w-[90vw] h-[40vh] md:h-[90vh] flex ml-auto mr-auto bg-cover md:bg-cover bg-no-repeat mb-14 md:mt-14"
     //   style={{ backgroundImage: `url(${HeroBanner})` }}
     // ></div>
-    <div className="w-[90vw] ml-auto mr-auto mt-12 md:mt-20 h-full">
+    <div className="w-[90vw] ml-auto mr-auto mt-12 md:mt-48 md:mb-20 h-full">
       <img
         src={HeroBanner}
         alt="Your Image"

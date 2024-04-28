@@ -28,7 +28,7 @@ const ProductLayout = () => {
   //for the select value for price
 
   return (
-    <div className="h-100vh w-[100%] flex flex-row gap-9">
+    <div className="h-100vh w-[100%] flex flex-row gap-9 md:mt-36">
       <div className=" w-[22vw] h-[600px] ">
         <ProductSort
           selectValue={selectValue}

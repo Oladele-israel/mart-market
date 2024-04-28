@@ -26,7 +26,7 @@ const SingleProductPage = () => {
   return (
     <div className="products">
       {/* this is the product image section*/}
-      <div className="  mx-auto p-8 flex flex-col md:flex-row gap-24 w-screen md:w-[80vw]">
+      <div className="  mx-auto p-8 flex flex-col md:flex-row md:mt-36 gap-24 w-screen md:w-[80vw]">
         <img src={product.photo} alt="Product" className="w-[30vw] mx-auto " />
         {/* This is the checkout details section */}
         <div className="flex flex-col gap-6 px-2 w-auto text-left">

@@ -12,7 +12,7 @@ const SpecialProduct = () => {
         </div>
       </div>
       {/*product display */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-y-4 justify-items-center mt-2  w-[90%] self-center ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-y-4 justify-items-center mt-2  w-[90%] self-center ">
         {loading ? (
           <div className="flex items-center justify-center h-full w-screen ml-auto mr-auto ">
             <div className="animate-spin rounded-full h-24 w-24 border-10 border-t-4 border-b-4 border-orange-400"></div>

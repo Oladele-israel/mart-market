@@ -1,5 +1,5 @@
 import products from "../models/products.model.js";
-
+import users from "../models/users.model.js";
 //finding all products
 const get_all_Products = async (req, res) => {
   try {
@@ -15,6 +15,20 @@ const get_all_Products = async (req, res) => {
       message: "product not found",
       error: error.messages,
     });
+  }
+};
+
+//get product by user id
+const getProductsByAdmin = async (req, res) => {
+  try {
+    const adminUserId = req.params.adminUserId;
+    const products = await products.find({ adminUser: adminUserId });
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -76,6 +90,34 @@ const productDelete = async (req, res) => {
 };
 
 //sending data to the database:
+const AdminproductPost = async (req, res) => {
+  try {
+    const adminUserId = req.params.adminUserId;
+    const adminUser = await users.find({ adminUser: adminUserId });
+
+    if (!adminUser) {
+      res.status(404).json({
+        success: false,
+        message: "unauthorized",
+      });
+    }
+
+    const adminProductData = { ...req.body, adminUser: adminUserId };
+    const created_product = await products.create(adminProductData);
+    res.status(201).json({
+      success: true,
+      message: "admin product created",
+      products: created_product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: " product not created",
+      error: error.message,
+    });
+  }
+};
+//admin product post
 const productPost = async (req, res) => {
   try {
     const created_product = await products.create(req.body);
@@ -99,4 +141,6 @@ export {
   productPost,
   productUpdate,
   singleProduct,
+  getProductsByAdmin,
+  AdminproductPost,
 };

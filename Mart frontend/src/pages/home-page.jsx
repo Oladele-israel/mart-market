@@ -6,7 +6,7 @@ import SpecialProduct from "../components/home-page component/specialOffer";
 
 const HomePage = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden flex flex-col">
       <HeroSection />
       <PopularProduct />
       <NewProduct />
