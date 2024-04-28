@@ -12,6 +12,7 @@ export const ProductContextProvider = ({ children }) => {
   const [randomArray, setRandom] = useState([]);
   const [loading, setLoading] = useState(true);
   const baseURL = import.meta.env.VITE_API_KEY;
+  console.log(baseURL);
 
   useEffect(() => {
     const fetchProducts = async () => {
