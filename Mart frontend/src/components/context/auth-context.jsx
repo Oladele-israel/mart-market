@@ -12,14 +12,13 @@ export const AuthContextProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
+  const baseURL = import.meta.env.VITE_API_KEY;
 
   const loginUser = async (credentials) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/user/login",
-        credentials,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseURL}/user/login`, credentials, {
+        withCredentials: true,
+      });
       setLoading(true);
       setUserDetails(response.data.userDetails);
       setMessage(response.data.message);
@@ -35,12 +34,9 @@ export const AuthContextProvider = ({ children }) => {
 
   const logoutUser = async () => {
     setLoading(true);
+    const baseURL = import.meta.env.VITE_API_KEY;
     try {
-      await axios.post(
-        "http://localhost:5000/user/logout",
-        {},
-        { withCredentials: true }
-      );
+      await axios.post(`${baseURL}/user/logout`, {}, { withCredentials: true });
       setUserDetails(null);
       setMessage(""); // Clear message on logout
       setLoading(false);
@@ -55,10 +51,9 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const validResponse = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/user/validateToken",
-          { withCredentials: true }
-        );
+        const response = await axios.get(`${baseURL}/user/validateToken`, {
+          withCredentials: true,
+        });
         console.log("the response from valid => ", response);
         if (response?.data?.success) {
           setMessage(response.data.message);

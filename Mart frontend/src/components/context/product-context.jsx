@@ -11,11 +11,12 @@ export const ProductContextProvider = ({ children }) => {
   const [product, setProduct] = useState([]);
   const [randomArray, setRandom] = useState([]);
   const [loading, setLoading] = useState(true);
+  const baseURL = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/product/all", {
+        const response = await axios.get(`${baseURL}/product/all`, {
           withCredentials: true,
         });
 
