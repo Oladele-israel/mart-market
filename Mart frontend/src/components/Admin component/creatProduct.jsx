@@ -10,11 +10,13 @@ const CreateProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState("");
 
+  const baseURL = import.meta.env.VITE_API_KEY;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
     axios
-      .post("http://localhost:5000/product/adminProduct", {
+      .post(`${baseURL}/product/adminProduct`, {
         name: productName,
         rating: rating,
         price: price,
@@ -23,7 +25,6 @@ const CreateProduct = () => {
         category: category,
       })
       .then((res) => {
-        console.log("the product added response => ", res);
         setProductName("");
         setRating("");
         setPrice("");
@@ -33,7 +34,6 @@ const CreateProduct = () => {
       })
       .catch((error) => {
         if (error instanceof axios.AxiosError) {
-          console.log("the error => ", error?.response?.data);
         }
       })
       .finally(() => setIsLoading(false));

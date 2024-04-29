@@ -15,12 +15,10 @@ const ProductLayout = () => {
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
-    console.log(selectedOption);
   };
 
   const handleIsChecked = (e) => {
     e.preventDefault();
-    console.log(selectValue);
     setSelectValue(null);
     setSelectedOption("");
   };
